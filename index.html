@@ -1,0 +1,572 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUTBOLER | Career Mode</title>
+
+<style>
+:root {
+  --bg: #0b0e13;
+  --panel: #141922;
+  --panel2: #1b2330;
+  --green: #45e08a;
+  --text: #f4f6f8;
+  --muted: #8993a3;
+  --border: #28313e;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+
+button, input, select { font: inherit; }
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 7%;
+  border-bottom: 1px solid var(--border);
+  background: #10141b;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.logo span { color: var(--green); }
+
+.status {
+  color: var(--green);
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+main {
+  max-width: 1100px;
+  margin: 35px auto;
+  padding: 0 20px;
+}
+
+.hero {
+  background: linear-gradient(110deg, #17251f, #111923 65%, #10141b);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 35px;
+  margin-bottom: 25px;
+}
+
+.hero small {
+  color: var(--green);
+  letter-spacing: 3px;
+  font-weight: bold;
+}
+
+.hero h1 {
+  font-size: clamp(30px, 5vw, 48px);
+  margin: 12px 0;
+}
+
+.hero p, .muted { color: var(--muted); }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 23px;
+  margin-bottom: 20px;
+}
+
+h2 { margin-top: 0; font-size: 20px; }
+
+label {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin: 16px 0 7px;
+}
+
+input, select {
+  width: 100%;
+  padding: 13px;
+  background: var(--panel2);
+  color: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+}
+
+input:focus, select:focus {
+  border-color: var(--green);
+}
+
+.btn {
+  background: var(--green);
+  color: #07120b;
+  padding: 13px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.btn:hover { filter: brightness(1.1); }
+
+.btn.secondary {
+  background: var(--panel2);
+  color: white;
+  border: 1px solid var(--border);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 13px;
+}
+
+.stat {
+  background: var(--panel2);
+  padding: 18px;
+  border-radius: 10px;
+}
+
+.stat small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.stat strong {
+  display: block;
+  font-size: 27px;
+  margin-top: 9px;
+}
+
+.green { color: var(--green); }
+
+.player-head {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.avatar {
+  width: 85px;
+  height: 85px;
+  display: grid;
+  place-items: center;
+  background: #26382e;
+  color: var(--green);
+  font-size: 30px;
+  font-weight: bold;
+  border-radius: 13px;
+}
+
+.player-info h1 { margin: 0 0 8px; }
+
+.overall {
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--green);
+}
+
+.progress {
+  height: 8px;
+  background: #29313b;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress div {
+  height: 100%;
+  background: var(--green);
+}
+
+.match {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  background: var(--panel2);
+  padding: 17px;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+.match-result {
+  color: var(--green);
+  font-weight: bold;
+}
+
+.news {
+  border-left: 3px solid var(--green);
+  padding: 12px 15px;
+  background: var(--panel2);
+  margin-top: 10px;
+  color: #dce2e9;
+}
+
+.hidden { display: none !important; }
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media(max-width:700px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .hero { padding: 23px; }
+  header { padding: 0 5%; }
+  .match { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">FUTBO<span>LER</span></div>
+  <div class="status">● CAREER MODE</div>
+</header>
+
+<main>
+
+<section id="creation">
+  <div class="hero">
+    <small>FOOTBALL CAREER SIMULATOR</small>
+    <h1>SUA CARREIRA<br>COMEÇA AQUI.</h1>
+    <p>Crie seu jogador. Escolha seu destino. Escreva sua história.</p>
+  </div>
+
+  <div class="card">
+    <h2>Criação de jogador</h2>
+    <p class="muted">Preencha os dados para iniciar sua jornada.</p>
+
+    <label>Nome do jogador</label>
+    <input id="playerName" placeholder="Ex: Caio Silva" maxlength="25">
+
+    <label>Idade</label>
+    <input id="playerAge" type="number" min="14" max="40" value="16">
+
+    <label>Nacionalidade</label>
+    <select id="nationality">
+      <option>Brasil</option>
+      <option>Portugal</option>
+      <option>Argentina</option>
+      <option>França</option>
+      <option>Espanha</option>
+      <option>Inglaterra</option>
+      <option>Alemanha</option>
+      <option>Uruguai</option>
+    </select>
+
+    <label>Posição</label>
+    <select id="position">
+      <option value="ATA">Atacante</option>
+      <option value="PE">Ponta esquerda</option>
+      <option value="PD">Ponta direita</option>
+      <option value="MEI">Meia-atacante</option>
+      <option value="MC">Meio-campista</option>
+      <option value="VOL">Volante</option>
+      <option value="ZAG">Zagueiro</option>
+      <option value="LE">Lateral esquerdo</option>
+      <option value="LD">Lateral direito</option>
+      <option value="GOL">Goleiro</option>
+    </select>
+
+    <label>Clube inicial</label>
+    <select id="club">
+      <option>Flamengo</option>
+      <option>Real Madrid</option>
+      <option>Barcelona</option>
+      <option>Manchester City</option>
+      <option>Liverpool</option>
+      <option>Arsenal</option>
+      <option>Palmeiras</option>
+      <option>Santos</option>
+      <option>Benfica</option>
+      <option>Borussia Dortmund</option>
+    </select>
+
+    <button class="btn" onclick="createPlayer()">INICIAR CARREIRA →</button>
+  </div>
+</section>
+
+<section id="dashboard" class="hidden">
+
+  <div class="hero">
+    <small>SEASON 2026/27</small>
+    <h1 id="welcome">BEM-VINDO AO FUTBOLER</h1>
+    <p id="clubLine"></p>
+  </div>
+
+  <div class="card">
+    <div class="player-head">
+      <div class="avatar" id="avatar">CS</div>
+      <div class="player-info">
+        <h1 id="dashName"></h1>
+        <div class="muted" id="dashDetails"></div>
+        <div class="overall" id="overall">65</div>
+        <small class="muted">OVERALL</small>
+      </div>
+    </div>
+    <div style="margin-top:20px">
+      <div class="muted">Experiência para próximo overall</div>
+      <div class="progress"><div id="xpBar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="stat"><small>PARTIDAS</small><strong id="games">0</strong></div>
+    <div class="stat"><small>GOLS</small><strong id="goals">0</strong></div>
+    <div class="stat"><small>ASSISTÊNCIAS</small><strong id="assists">0</strong></div>
+    <div class="stat"><small>VITÓRIAS</small><strong id="wins">0</strong></div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h2>Próxima partida</h2>
+    <div class="match">
+      <div>
+        <small class="muted">SEU CLUBE</small>
+        <h2 id="homeClub">Flamengo</h2>
+      </div>
+      <strong>VS</strong>
+      <div>
+        <small class="muted">ADVERSÁRIO</small>
+        <h2 id="opponent">Palmeiras</h2>
+      </div>
+    </div>
+    <button class="btn" onclick="playMatch()">JOGAR PARTIDA</button>
+    <button class="btn secondary" onclick="changeOpponent()">TROCAR ADVERSÁRIO</button>
+  </div>
+
+  <div class="card">
+    <h2>Últimos acontecimentos</h2>
+    <div id="news">
+      <div class="news">Sua carreira começou! Mostre seu futebol.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Informações da carreira</h2>
+    <p class="muted">Temporada: <strong id="season">2026/27</strong></p>
+    <p class="muted">Idade: <strong id="ageInfo"></strong></p>
+    <p class="muted">Nacionalidade: <strong id="nationalInfo"></strong></p>
+    <p class="muted">Clube: <strong id="clubInfo"></strong></p>
+    <button class="btn secondary" onclick="resetCareer()">REINICIAR CARREIRA</button>
+  </div>
+
+</section>
+</main>
+
+<footer>FUTBOLER © 2026 | SUA HISTÓRIA NO FUTEBOL</footer>
+
+<script>
+let career = null;
+
+const opponents = [
+  "Palmeiras", "Fluminense", "Botafogo",
+  "Corinthians", "São Paulo", "Santos",
+  "Real Madrid", "Barcelona", "Liverpool",
+  "Manchester City", "Arsenal", "Benfica"
+];
+
+let currentOpponent = "Palmeiras";
+
+function save() {
+  localStorage.setItem("futbolerCareer", JSON.stringify(career));
+}
+
+function createPlayer() {
+  const name = document.getElementById("playerName").value.trim();
+  const age = Number(document.getElementById("playerAge").value);
+
+  if (!name) {
+    alert("Digite o nome do jogador!");
+    return;
+  }
+
+  if (!Number.isInteger(age) || age < 14 || age > 40) {
+    alert("Escolha uma idade entre 14 e 40 anos.");
+    return;
+  }
+
+  career = {
+    name,
+    age,
+    nationality: document.getElementById("nationality").value,
+    position: document.getElementById("position").value,
+    club: document.getElementById("club").value,
+    overall: 65,
+    xp: 0,
+    games: 0,
+    goals: 0,
+    assists: 0,
+    wins: 0,
+    draws: 0,
+    losses: 0,
+    season: 2026,
+    history: ["Sua carreira começou! Boa sorte."]
+  };
+
+  save();
+  showDashboard();
+}
+
+function showDashboard() {
+  if (!career) return;
+
+  document.getElementById("creation").classList.add("hidden");
+  document.getElementById("dashboard").classList.remove("hidden");
+
+  document.getElementById("welcome").textContent =
+    career.name.toUpperCase();
+
+  document.getElementById("clubLine").textContent =
+    career.club + " | Temporada " + career.season + "/" + (career.season + 1);
+
+  document.getElementById("dashName").textContent = career.name;
+  document.getElementById("dashDetails").textContent =
+    career.position + " • " + career.club + " • " + career.age + " anos";
+
+  document.getElementById("avatar").textContent =
+    career.name.split(" ").map(x => x[0]).join("").slice(0,2).toUpperCase();
+
+  document.getElementById("overall").textContent = career.overall;
+  document.getElementById("games").textContent = career.games;
+  document.getElementById("goals").textContent = career.goals;
+  document.getElementById("assists").textContent = career.assists;
+  document.getElementById("wins").textContent = career.wins;
+
+  document.getElementById("xpBar").style.width =
+    (career.xp / 100 * 100) + "%";
+
+  document.getElementById("homeClub").textContent = career.club;
+  document.getElementById("opponent").textContent = currentOpponent;
+
+  document.getElementById("season").textContent =
+    career.season + "/" + (career.season + 1);
+
+  document.getElementById("ageInfo").textContent = career.age;
+  document.getElementById("nationalInfo").textContent = career.nationality;
+  document.getElementById("clubInfo").textContent = career.club;
+
+  document.getElementById("news").innerHTML =
+    career.history.slice(0,5).map(item =>
+      `<div class="news">${item}</div>`
+    ).join("");
+}
+
+function changeOpponent() {
+  let options = opponents.filter(x => x !== career.club && x !== currentOpponent);
+  currentOpponent = options[Math.floor(Math.random() * options.length)];
+  document.getElementById("opponent").textContent = currentOpponent;
+}
+
+function addNews(message) {
+  career.history.unshift(message);
+  career.history = career.history.slice(0,10);
+}
+
+function playMatch() {
+  const rival = currentOpponent;
+
+  const teamGoals = Math.floor(Math.random() * 4);
+  const rivalGoals = Math.floor(Math.random() * 4);
+
+  career.games++;
+
+  if (teamGoals > rivalGoals) career.wins++;
+  else if (teamGoals === rivalGoals) career.draws++;
+  else career.losses++;
+
+  let goals = 0;
+  let assists = 0;
+
+  if (career.position === "GOL" ||
+      career.position === "ZAG" ||
+      career.position === "VOL") {
+    goals = Math.random() < 0.18 ? 1 : 0;
+    assists = Math.random() < 0.20 ? 1 : 0;
+  } else {
+    goals = Math.floor(Math.random() * 3);
+    assists = Math.floor(Math.random() * 2);
+  }
+
+  goals = Math.min(goals, teamGoals);
+  assists = Math.min(assists, Math.max(0, teamGoals - goals));
+
+  career.goals += goals;
+  career.assists += assists;
+
+  career.xp += 20;
+
+  let message = `FIM DE JOGO: ${career.club} ${teamGoals} x ${rivalGoals} ${rival}. `;
+
+  if (goals > 0) message += `${career.name} marcou ${goals} gol(s)! `;
+  if (assists > 0) message += `${assists} assistência(s)! `;
+  if (goals === 0 && assists === 0) message += "Uma partida sem participação direta em gols. ";
+
+  if (career.xp >= 100) {
+    career.xp -= 100;
+    if (career.overall < 99) {
+      career.overall++;
+      message += "EVOLUÇÃO! Seu overall subiu para " + career.overall + ".";
+    }
+  }
+
+  addNews(message);
+
+  if (career.games % 10 === 0) {
+    career.season++;
+    career.age++;
+    addNews("Uma nova temporada começou! Você agora tem " + career.age + " anos.");
+  }
+
+  save();
+  changeOpponent();
+  showDashboard();
+}
+
+function resetCareer() {
+  if (!confirm("Tem certeza que deseja apagar sua carreira?")) return;
+
+  localStorage.removeItem("futbolerCareer");
+  career = null;
+  location.reload();
+}
+
+const saved = localStorage.getItem("futbolerCareer");
+
+if (saved) {
+  try {
+    career = JSON.parse(saved);
+    if (!career || !career.name || !Number.isFinite(career.overall)) {
+      throw new Error("Carreira inválida");
+    }
+    showDashboard();
+  } catch {
+    localStorage.removeItem("futbolerCareer");
+    career = null;
+  }
+}
+</script>
+
+</body>
+</html>
